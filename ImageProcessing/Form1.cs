@@ -22,7 +22,8 @@ namespace ImageProcessing
         public Form1()
         {
             InitializeComponent();
-            trackBar1.Enabled = saveBtn.Enabled = retryBtn.Enabled = false;
+            trackBar1.Enabled = saveBtn.Enabled = retryBtn.Enabled = stopBtn.Enabled = false;
+            stopBtn.Visible = false;
         }
 
         /// <summary>
@@ -65,6 +66,8 @@ namespace ImageProcessing
 
             menuStrip1.Enabled = trackBar1.Enabled = saveBtn.Enabled = checkedLColorList.Enabled = retryBtn.Enabled = false;
 
+            stopBtn.Enabled = true;
+
             _checkedColors.Clear();
 
             SetColors();
@@ -74,7 +77,7 @@ namespace ImageProcessing
             Bitmap bitmap = new Bitmap(openFileDialog1.FileName);
             await Task.Run(() => { RunProcessing(bitmap); });
 
-            menuStrip1.Enabled = trackBar1.Enabled = saveBtn.Enabled = retryBtn.Enabled = true;
+            menuStrip1.Enabled = trackBar1.Enabled = saveBtn.Enabled = checkedLColorList.Enabled = retryBtn.Enabled = true;
 
             sw.Stop();
             Text = $"Time processing: {sw.Elapsed.Seconds} sec";
@@ -185,6 +188,13 @@ namespace ImageProcessing
         private void button1_Click_1(object sender, EventArgs e)
         {
             Run();
+        }
+
+        private void stopBtn_Click(object sender, EventArgs e)
+        {
+
+
+            stopBtn.Enabled = false;
         }
     }
 }
