@@ -37,6 +37,7 @@
             this.trackBar1 = new System.Windows.Forms.TrackBar();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveBtn = new System.Windows.Forms.Button();
+            this.retryBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -62,6 +63,7 @@
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.retryBtn);
             this.splitContainer1.Panel2.Controls.Add(this.saveBtn);
             this.splitContainer1.Panel2.Controls.Add(this.checkedLColorList);
             this.splitContainer1.Panel2.Controls.Add(this.trackBar1);
@@ -147,6 +149,17 @@
             this.saveBtn.UseVisualStyleBackColor = true;
             this.saveBtn.Click += new System.EventHandler(this.button1_Click);
             // 
+            // retryBtn
+            // 
+            this.retryBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.retryBtn.Location = new System.Drawing.Point(48, 156);
+            this.retryBtn.Name = "retryBtn";
+            this.retryBtn.Size = new System.Drawing.Size(68, 30);
+            this.retryBtn.TabIndex = 4;
+            this.retryBtn.Text = "Retry";
+            this.retryBtn.UseVisualStyleBackColor = true;
+            this.retryBtn.Click += new System.EventHandler(this.button1_Click_1);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -180,6 +193,7 @@
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.CheckedListBox checkedLColorList;
         private System.Windows.Forms.Button saveBtn;
+        private System.Windows.Forms.Button retryBtn;
     }
 }
 

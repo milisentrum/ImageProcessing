@@ -17,12 +17,12 @@ namespace ImageProcessing
     {
         private List<Bitmap> _bitmaps = new List<Bitmap>();
         private Random _rnd = new Random();
-        private List<Color> _checkedColors = new List<Color>() {Color.White};
+        private List<Color> _checkedColors = new List<Color>();
 
         public Form1()
         {
             InitializeComponent();
-            trackBar1.Enabled = saveBtn.Enabled = false;
+            trackBar1.Enabled = saveBtn.Enabled = retryBtn.Enabled = false;
         }
 
         /// <summary>
@@ -30,41 +30,61 @@ namespace ImageProcessing
         /// </summary>
         private void SetColors()
         {
-            foreach (var item in checkedLColorList.CheckedItems)
+            if (checkedLColorList.CheckedItems.Count == 0)
             {
-                if (item.ToString() == "Black")
-                    _checkedColors.Add(Color.Black);
-
-                if (item.ToString() == "Red")
-                    _checkedColors.Add(Color.Red);
-
-                if (item.ToString() == "Green")
-                    _checkedColors.Add(Color.Green);
-
-                if (item.ToString() == "Blue")
-                    _checkedColors.Add(Color.Blue);
-
+                _checkedColors.Add(Color.White);
             }
+            else 
+            {
+                foreach (var item in checkedLColorList.CheckedItems)
+                {
+                    if (item.ToString() == "Black")
+                        _checkedColors.Add(Color.Black);
+
+                    if (item.ToString() == "White")
+                        _checkedColors.Add(Color.White);
+
+                    if (item.ToString() == "Red")
+                        _checkedColors.Add(Color.Red);
+
+                    if (item.ToString() == "Green")
+                        _checkedColors.Add(Color.Green);
+
+                    if (item.ToString() == "Blue")
+                        _checkedColors.Add(Color.Blue);
+
+                }
+            }
+            
         }
-        private async void openToolStripMenuItem_Click(object sender, EventArgs e)
+
+        // Работа программы
+        private async void Run()
+        {
+            var sw = Stopwatch.StartNew();
+
+            menuStrip1.Enabled = trackBar1.Enabled = saveBtn.Enabled = checkedLColorList.Enabled = retryBtn.Enabled = false;
+
+            _checkedColors.Clear();
+
+            SetColors();
+
+            pictureBox1.Image = null;
+            _bitmaps.Clear();
+            Bitmap bitmap = new Bitmap(openFileDialog1.FileName);
+            await Task.Run(() => { RunProcessing(bitmap); });
+
+            menuStrip1.Enabled = trackBar1.Enabled = saveBtn.Enabled = retryBtn.Enabled = true;
+
+            sw.Stop();
+            Text = $"Time processing: {sw.Elapsed.Seconds} sec";
+        }
+
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                var sw = Stopwatch.StartNew();
-
-                menuStrip1.Enabled = trackBar1.Enabled = saveBtn.Enabled = checkedLColorList.Enabled = false;
-
-                SetColors();
-
-                pictureBox1.Image = null;
-                _bitmaps.Clear();
-                Bitmap bitmap = new Bitmap(openFileDialog1.FileName);
-                await Task.Run( () => { RunProcessing(bitmap); } );
-
-                menuStrip1.Enabled = trackBar1.Enabled = saveBtn.Enabled = true;
-
-                sw.Stop();
-                Text = $"Time processing: {sw.Elapsed.Seconds} sec";  
+                Run();
             }
         }
 
@@ -160,6 +180,11 @@ namespace ImageProcessing
             {
                 MessageBox.Show("Изобраение сохранено (нет) ");
             }
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            Run();
         }
     }
 }
