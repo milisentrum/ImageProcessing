@@ -5,6 +5,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -61,11 +62,25 @@ namespace ImageProcessing
 
                 var currentBitmap = new Bitmap(bitmap.Width, bitmap.Height);
 
+                // Изначально на битмапе часть пикселей белая, часть чёрная
+                for (int y = 0; y < bitmap.Height; y++)
+                {
+                    for (int x = 0; x < bitmap.Width; x++)
+                    {
+                        bool isBlack = rnd.Next(2) == 0;
+
+                        if (isBlack)
+                        {
+                            currentBitmap.SetPixel(x, y, Color.Black);
+                        }
+                    }
+                }
+               
                 foreach(var pixel in currentSetPixels)
                 {
                     currentBitmap.SetPixel(pixel.Point.X, pixel.Point.Y, pixel.Color);
                 }
-
+                
                 _bitmaps.Add(currentBitmap);
 
                 this.Invoke(new Action( () => Text = $"{i}%"));
