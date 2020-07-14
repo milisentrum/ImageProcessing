@@ -175,9 +175,12 @@ namespace ImageProcessing
                 return;
 
             _bitmaps[trackBar1.Value].Save(@"C:\Users\Know How\savedImage.jpg");
-            if(File.Exists(@"C:\Users\Know How\savedImage.jpg"))
+
+             Clipboard.SetText(@"C:\Users\Know How\savedImage.jpg");
+
+            if (File.Exists(@"C:\Users\Know How\savedImage.jpg"))
             {
-                MessageBox.Show(@"Изображение сохранено по адресу C:\Users\Know How\savedImage.jpg", "Успешно");
+                MessageBox.Show(@"Ваш в буфере обмена", "Изображение сохранено");
             }
             else
             {
