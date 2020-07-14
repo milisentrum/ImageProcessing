@@ -36,6 +36,7 @@ namespace ImageProcessing
                 menuStrip1.Enabled = trackBar1.Enabled = true;
 
                 sw.Stop();
+                Text = $"Time processing: {sw.Elapsed.Seconds} sec";  
             }
         }
 
@@ -103,7 +104,7 @@ namespace ImageProcessing
             if (_bitmaps == null || _bitmaps.Count == 0)
                 return;
 
-            pictureBox1.Image = _bitmaps[trackBar1.Value - 1];
+            pictureBox1.Image = _bitmaps[trackBar1.Value];
         }
     }
 }
