@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -16,48 +17,51 @@ namespace ImageProcessing
     {
         private List<Bitmap> _bitmaps = new List<Bitmap>();
         private Random _rnd = new Random();
-        private List<Color> _checkedColors = new List<Color>();
+        private List<Color> _checkedColors = new List<Color>() {Color.White};
 
         public Form1()
         {
             InitializeComponent();
+            trackBar1.Enabled = saveBtn.Enabled = false;
         }
 
+        /// <summary>
+        /// устанавливаем выбранные цвета
+        /// </summary>
+        private void SetColors()
+        {
+            foreach (var item in checkedLColorList.CheckedItems)
+            {
+                if (item.ToString() == "Black")
+                    _checkedColors.Add(Color.Black);
+
+                if (item.ToString() == "Red")
+                    _checkedColors.Add(Color.Red);
+
+                if (item.ToString() == "Green")
+                    _checkedColors.Add(Color.Green);
+
+                if (item.ToString() == "Blue")
+                    _checkedColors.Add(Color.Blue);
+
+            }
+        }
         private async void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 var sw = Stopwatch.StartNew();
 
-                menuStrip1.Enabled = trackBar1.Enabled = false;
+                menuStrip1.Enabled = trackBar1.Enabled = saveBtn.Enabled = checkedLColorList.Enabled = false;
 
-                // Выбранные цвета
-                foreach(var item in checkedLColorList.CheckedItems)
-                {
-                    if (item.ToString() == "White")
-                        _checkedColors.Add(Color.White);
-
-                    if (item.ToString() == "Black")
-                        _checkedColors.Add(Color.Black);
-
-                    if (item.ToString() == "Red")
-                        _checkedColors.Add(Color.Red);
-
-                    if (item.ToString() == "Green")
-                        _checkedColors.Add(Color.Green);
-
-                    if (item.ToString() == "Blue")
-                        _checkedColors.Add(Color.Blue);
-
-                }
-                _checkedColors = checkedLColorList.
+                SetColors();
 
                 pictureBox1.Image = null;
                 _bitmaps.Clear();
                 Bitmap bitmap = new Bitmap(openFileDialog1.FileName);
                 await Task.Run( () => { RunProcessing(bitmap); } );
 
-                menuStrip1.Enabled = trackBar1.Enabled = true;
+                menuStrip1.Enabled = trackBar1.Enabled = saveBtn.Enabled = true;
 
                 sw.Stop();
                 Text = $"Time processing: {sw.Elapsed.Seconds} sec";  
@@ -85,17 +89,14 @@ namespace ImageProcessing
 
                 var currentBitmap = new Bitmap(bitmap.Width, bitmap.Height);
 
-                // Изначально на битмапе часть пикселей белая, часть чёрная
+                // Изначально на битмапе часть пикселей разукрашена в выбранные цвета
                 for (int y = 0; y < bitmap.Height; y++)
                 {
                     for (int x = 0; x < bitmap.Width; x++)
                     {
-                        bool isBlack = _rnd.Next(2) == 0;
+                        Color randomColor = _checkedColors[_rnd.Next(_checkedColors.Count)];
 
-                        if (isBlack)
-                        {
-                            currentBitmap.SetPixel(x, y, Color.Black);
-                        }
+                        currentBitmap.SetPixel(x, y, randomColor);  
                     }
                 }
                
@@ -143,6 +144,22 @@ namespace ImageProcessing
                 return;
 
             pictureBox1.Image = _bitmaps[trackBar1.Value];
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (_bitmaps == null || _bitmaps.Count == 0)
+                return;
+
+            _bitmaps[trackBar1.Value].Save(@"C:\Users\Know How\savedImage.jpg");
+            if(File.Exists(@"C:\Users\Know How\savedImage.jpg"))
+            {
+                MessageBox.Show(@"Изображение сохранено по адресу C:\Users\Know How\savedImage.jpg", "Успешно");
+            }
+            else
+            {
+                MessageBox.Show("Изобраение сохранено (нет) ");
+            }
         }
     }
 }
