@@ -15,7 +15,9 @@ namespace ImageProcessing
     public partial class Form1 : Form
     {
         private List<Bitmap> _bitmaps = new List<Bitmap>();
-        private Random rnd = new Random();
+        private Random _rnd = new Random();
+        private List<Color> _checkedColors = new List<Color>();
+
         public Form1()
         {
             InitializeComponent();
@@ -28,6 +30,27 @@ namespace ImageProcessing
                 var sw = Stopwatch.StartNew();
 
                 menuStrip1.Enabled = trackBar1.Enabled = false;
+
+                // Выбранные цвета
+                foreach(var item in checkedLColorList.CheckedItems)
+                {
+                    if (item.ToString() == "White")
+                        _checkedColors.Add(Color.White);
+
+                    if (item.ToString() == "Black")
+                        _checkedColors.Add(Color.Black);
+
+                    if (item.ToString() == "Red")
+                        _checkedColors.Add(Color.Red);
+
+                    if (item.ToString() == "Green")
+                        _checkedColors.Add(Color.Green);
+
+                    if (item.ToString() == "Blue")
+                        _checkedColors.Add(Color.Blue);
+
+                }
+                _checkedColors = checkedLColorList.
 
                 pictureBox1.Image = null;
                 _bitmaps.Clear();
@@ -55,7 +78,7 @@ namespace ImageProcessing
             {
                 for (int j = 0; j < pixelsInStep; j++)
                 {
-                    var index = rnd.Next(pixels.Count);
+                    var index = _rnd.Next(pixels.Count);
                     currentSetPixels.Add(pixels[index]);
                     pixels.RemoveAt(index);
                 }
@@ -67,7 +90,7 @@ namespace ImageProcessing
                 {
                     for (int x = 0; x < bitmap.Width; x++)
                     {
-                        bool isBlack = rnd.Next(2) == 0;
+                        bool isBlack = _rnd.Next(2) == 0;
 
                         if (isBlack)
                         {

@@ -33,9 +33,9 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.checkedLColorList = new System.Windows.Forms.CheckedListBox();
             this.trackBar1 = new System.Windows.Forms.TrackBar();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -61,7 +61,7 @@
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.checkedListBox1);
+            this.splitContainer1.Panel2.Controls.Add(this.checkedLColorList);
             this.splitContainer1.Panel2.Controls.Add(this.trackBar1);
             this.splitContainer1.Size = new System.Drawing.Size(800, 450);
             this.splitContainer1.SplitterDistance = 673;
@@ -102,6 +102,20 @@
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
+            // checkedLColorList
+            // 
+            this.checkedLColorList.FormattingEnabled = true;
+            this.checkedLColorList.Items.AddRange(new object[] {
+            "White",
+            "Black",
+            "Red",
+            "Green",
+            "Blue"});
+            this.checkedLColorList.Location = new System.Drawing.Point(48, 3);
+            this.checkedLColorList.Name = "checkedLColorList";
+            this.checkedLColorList.Size = new System.Drawing.Size(68, 79);
+            this.checkedLColorList.TabIndex = 2;
+            // 
             // trackBar1
             // 
             this.trackBar1.Dock = System.Windows.Forms.DockStyle.Left;
@@ -119,20 +133,6 @@
             // openFileDialog1
             // 
             this.openFileDialog1.Filter = "Images|*.jpg;*.jpeg;*.png;*.bmp";
-            // 
-            // checkedListBox1
-            // 
-            this.checkedListBox1.FormattingEnabled = true;
-            this.checkedListBox1.Items.AddRange(new object[] {
-            "White",
-            "Black",
-            "Red",
-            "Green",
-            "Blue"});
-            this.checkedListBox1.Location = new System.Drawing.Point(48, 3);
-            this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size(68, 79);
-            this.checkedListBox1.TabIndex = 2;
             // 
             // Form1
             // 
@@ -165,7 +165,7 @@
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
-        private System.Windows.Forms.CheckedListBox checkedListBox1;
+        private System.Windows.Forms.CheckedListBox checkedLColorList;
     }
 }
 
