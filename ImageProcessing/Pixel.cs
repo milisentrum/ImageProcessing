@@ -11,6 +11,5 @@ namespace ImageProcessing
     {
         public Color Color { get; set; }
         public Point Point { get; set; }
-
     }
 }
